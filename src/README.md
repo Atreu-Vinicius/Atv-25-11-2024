@@ -1,38 +1,70 @@
-Neste exercício, o objetivo principal é aprender como adicionar e utilizar componentes no seu aplicativo React, além de como usar JSX para estruturar a visualização do seu componente. Ao final deste exercício, você será capaz de:
+MenuComponent.js
 
-Adicionar componentes ao seu aplicativo React.
-Usar JSX para definir as exibições de um componente.
-Além disso, você irá praticar a criação de componentes reutilizáveis e dinâmicos, utilizando dados armazenados em estado e renderizando informações de maneira eficiente.
+Quais importações são usadas?
 
-Estrutura do Exercício
-1. Configuração Inicial
-Primeiramente, é necessário fazer a configuração do projeto para que ele tenha todos os recursos que você vai utilizar ao longo do exercício. Isso envolve:
+import React, { useState } from 'react';
+Importa o React e o hook useState do React para gerenciar o estado do componente.
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+Importa componentes específicos do Reactstrap usados para construir o layout do cartão:
+Card: Componente principal que estrutura o cartão.
+CardImg: Exibe a imagem dentro do cartão.
+CardImgOverlay: Usado para sobrepor um conteúdo (geralmente texto) sobre a imagem do cartão.
+CardText: Exibe texto dentro do cartão.
+CardBody: Contém o corpo do cartão, onde o conteúdo é inserido.
+CardTitle: Exibe o título dentro do cartão.
 
-Baixar um arquivo ZIP fornecido, contendo imagens que serão usadas no projeto.
-Criar uma estrutura de pastas dentro do seu projeto React para organizar as imagens e os componentes.
-O arquivo de imagens será extraído e movido para a pasta public/assets, onde ficará acessível para uso no aplicativo. Essas imagens serão usadas para ilustrar os itens do menu em nosso componente.
+Existem componentes? O que eles estão fazendo?
 
-2. Criação da Estrutura de Componentes
-Dentro do seu projeto, você irá criar uma pasta chamada components dentro de src, onde os componentes React serão armazenados. Em seguida, será criado um novo componente denominado MenuComponent.js.
+Sim, o componente principal é o Menu.
+Menu: Mapeia a lista de pratos e exibe um cartão para cada prato. Cada prato é representado visualmente por um cartão com sua imagem e nome.
+Quando um prato é selecionado, o estado do prato selecionado é atualizado, e os detalhes desse prato são exibidos em um cartão separado.
+Qual é o propósito do onDishSelect no projeto?
+A função onDishSelect é chamada quando o usuário clica em um prato do menu. Ela atualiza o estado do prato selecionado (selectedDish), permitindo que o componente exiba os detalhes desse prato na interface, em um cartão específico.
 
-Este componente será responsável por renderizar uma lista de pratos, mostrando suas imagens, descrições, preços e outros detalhes. Ele utilizará o hook useState do React para armazenar os dados dos pratos e renderizar a lista dinamicamente.
+Para que serve o renderDish?
 
-3. Definição do Componente Menu
-Dentro do arquivo MenuComponent.js, você irá definir o componente Menu, que realiza as seguintes ações:
+A função renderDish é responsável por renderizar os detalhes de um prato selecionado.
+Se um prato foi selecionado (ou seja, o prato não é null), ele exibe um cartão com a imagem, nome e descrição do prato.
+Caso contrário, a função não faz nada e não renderiza nada.
 
-Armazenamento de dados: A lista de pratos (dishes) é armazenada no estado do componente, utilizando o hook useState. Cada prato contém informações como nome, imagem, descrição, categoria e preço.
+Para que serve props.dishes.map?
 
-Renderização dinâmica: Usando o método map(), os dados de cada prato são iterados para gerar os elementos JSX correspondentes. Para cada prato, um item de menu com uma imagem, título e descrição é exibido.
+A função props.dishes.map percorre a lista de pratos passada como prop para o componente Menu.
+Para cada prato, ela cria e exibe um Card com a imagem e o nome do prato.
+Ao clicar no prato, a função onDishSelect é chamada para exibir os detalhes do prato selecionado.
+pratos.js
 
-Uso do Media do reactstrap: O componente Media do reactstrap é utilizado para criar uma estrutura de layout onde a imagem do prato é exibida ao lado do seu nome e descrição, criando um formato limpo e responsivo.
+Quais são as propriedades?
 
-4. Atualização do Componente Principal (App.js)
-Após criar o componente Menu, você deverá fazer a atualização no arquivo App.js para incluí-lo na renderização da aplicação.
+Cada objeto de prato possui as seguintes propriedades:
+id: Um identificador único para o prato.
+name: O nome do prato.
+image: O caminho para a imagem do prato.
+category: A categoria do prato (por exemplo, “prato principal”, “aperitivo”).
+label: Um rótulo opcional que pode ser exibido (por exemplo, "Hot", "New").
+price: O preço do prato.
+description: Uma descrição detalhada do prato.
+comments: Um array de objetos com os comentários dos usuários sobre o prato. Cada comentário possui:
+id: Identificador único do comentário.
+rating: Avaliação do prato (por exemplo, de 1 a 5).
+comment: O texto do comentário.
+author: Nome do autor do comentário.
+date: Data do comentário.
 
-No arquivo App.js, o componente Menu será importado e usado dentro da estrutura principal do aplicativo. Isso garante que o menu será exibido na tela principal quando o aplicativo for iniciado.
+Que tipo de dado é usado?
 
-5. Limpeza do Arquivo CSS
-Você também irá limpar o conteúdo do arquivo App.css, removendo estilos antigos, para que possa criar uma base limpa para os seus próprios estilos no futuro. Isso não é obrigatório, mas é uma boa prática para evitar conflitos de estilo.
+O tipo de dado usado para armazenar os pratos é uma matriz de objetos.
+Cada objeto representa um prato e contém diferentes tipos de dados como:
+Strings (name, category, description, etc.).
+Números (id, price).
+Arrays de objetos (comments).
+App.js
 
-6. Commit das Alterações
-Após realizar todas as alterações no código, o exercício será finalizado com um commit no Git para registrar as modificações. A mensagem do commit será "Components Part 1", indicando que você completou a primeira parte do exercício de componentes.
+Para que servem os const [dishes]?
+
+A constante dishes é um estado do componente App. Ela contém os dados dos pratos, inicializados com os dados importados do arquivo DISHES.
+Esse estado não é editado diretamente, mas é passado como uma prop para o componente Menu, permitindo que ele exiba os pratos.
+Explique como funciona Pratos={dishes}.
+O componente Menu é renderizado dentro de App.js, e a constante dishes (que contém a lista de pratos) é passada como prop para o componente Menu.
+No componente Menu, a prop dishes é usada para acessar os dados dos pratos e gerar um cartão para cada prato.
+Quando um prato é clicado, a função onDishSelect atualiza o estado de selectedDish, permitindo que os detalhes do prato selecionado sejam exibidos em um cartão separado.
